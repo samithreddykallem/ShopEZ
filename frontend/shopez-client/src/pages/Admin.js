@@ -1,14 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+
 function Admin() {
   const [products, setProducts] = useState([]);
 
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
+  const [description, setDescription] =
+    useState("");
+  const [category, setCategory] =
+    useState("");
+  const [price, setPrice] =
+    useState("");
+  const [stock, setStock] =
+    useState("");
+  const [image, setImage] =
+    useState("");
 
   const [editingId, setEditingId] =
     useState(null);
@@ -39,6 +46,7 @@ function Admin() {
           category,
           price,
           stock,
+          image,
         }
       );
 
@@ -60,6 +68,7 @@ function Admin() {
     setCategory(product.category);
     setPrice(product.price);
     setStock(product.stock);
+    setImage(product.image || "");
   };
 
   const updateProduct = async () => {
@@ -72,10 +81,13 @@ function Admin() {
           category,
           price,
           stock,
+          image,
         }
       );
 
-      alert("Product Updated Successfully");
+      alert(
+        "Product Updated Successfully"
+      );
 
       setEditingId(null);
 
@@ -93,7 +105,9 @@ function Admin() {
         `http://localhost:5000/api/products/${id}`
       );
 
-      alert("Product Deleted Successfully");
+      alert(
+        "Product Deleted Successfully"
+      );
 
       fetchProducts();
     } catch (error) {
@@ -108,6 +122,7 @@ function Admin() {
     setCategory("");
     setPrice("");
     setStock("");
+    setImage("");
   };
 
   return (
@@ -166,6 +181,15 @@ function Admin() {
           }
         />
 
+        <input
+          className="form-control mb-2"
+          placeholder="Image URL"
+          value={image}
+          onChange={(e) =>
+            setImage(e.target.value)
+          }
+        />
+
         {editingId ? (
           <button
             className="btn btn-warning"
@@ -192,6 +216,20 @@ function Admin() {
             key={product._id}
           >
             <div className="card p-3 mb-3 shadow">
+              <img
+                src={
+                  product.image ||
+                  "https://via.placeholder.com/300"
+                }
+                alt={product.name}
+                className="img-fluid rounded mb-3"
+                style={{
+                  height: "220px",
+                  width: "100%",
+                  objectFit: "cover",
+                }}
+              />
+
               <h5>{product.name}</h5>
 
               <p>

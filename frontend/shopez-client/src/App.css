@@ -1,38 +1,140 @@
-.App {
+/* Global */
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #f4f7fc;
+  font-family: "Poppins", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Navbar */
+
+.navbar {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Cards */
+
+.card {
+  border: none !important;
+  border-radius: 20px !important;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 15px 35px
+    rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Product Images */
+
+.card img {
+  transition: transform 0.4s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+/* Buttons */
+
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    #667eea,
+    #764ba2
+  );
+  border: none;
+  border-radius: 10px;
+}
+
+.btn-success {
+  background: linear-gradient(
+    135deg,
+    #11998e,
+    #38ef7d
+  );
+  border: none;
+  border-radius: 10px;
+}
+
+.btn-danger {
+  border-radius: 10px;
+}
+
+.btn-warning {
+  border-radius: 10px;
+}
+
+/* Search Bar */
+
+.form-control {
+  border-radius: 12px;
+  padding: 12px;
+}
+
+/* Headings */
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 700;
+}
+
+/* Hero Banner */
+
+.hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    135deg,
+    #667eea,
+    #764ba2
+  );
+
+  color: white;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.hero h1 {
+  font-size: 4rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.hero p {
+  font-size: 1.3rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Cart */
+
+.cart-card {
+  border-left: 5px solid #667eea;
+}
+
+/* Admin Dashboard */
+
+.admin-card {
+  border-radius: 20px;
+  padding: 20px;
+  background: white;
+}
+
+/* Footer */
+
+.footer {
+  background: #1a1a1a;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;
 }

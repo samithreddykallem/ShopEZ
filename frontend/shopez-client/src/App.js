@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -10,7 +11,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Orders from "./pages/Orders";
 import Admin from "./pages/Admin";
-import AdminRoute from "./components/AdminRoute";
 
 function App() {
   return (
@@ -19,8 +19,15 @@ function App() {
 
       <Routes>
         {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
 
         {/* Protected Routes */}
         <Route
@@ -49,30 +56,25 @@ function App() {
             </ProtectedRoute>
           }
         />
-	<Route
-		path="/orders"
- 		element={
-    		<ProtectedRoute>
-      			<Orders />
-    		</ProtectedRoute>
-  		}
-	/>
-<Route
-  path="/admin"
-  element={
-    <ProtectedRoute>
-      <Admin />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/admin"
-  element={
-    <AdminRoute>
-      <Admin />
-    </AdminRoute>
-  }
-/>
+
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Only Route */}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </Router>
   );

@@ -14,9 +14,60 @@ function Cart() {
         "http://localhost:5000/api/cart"
       );
 
+      console.log("Cart Data:", res.data);
+
       setCartItems(res.data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const updateQuantity = async (
+    cartId,
+    quantity
+  ) => {
+    try {
+      if (quantity < 1) return;
+
+      console.log(
+        "Updating Cart:",
+        cartId,
+        quantity
+      );
+
+      await axios.put(
+        `http://localhost:5000/api/cart/${cartId}`,
+        {
+          quantity,
+        }
+      );
+
+      fetchCart();
+    } catch (error) {
+      console.log(
+        "Update Error:",
+        error.response?.data || error
+      );
+    }
+  };
+
+  const removeItem = async (cartId) => {
+    try {
+      console.log(
+        "Removing Cart:",
+        cartId
+      );
+
+      await axios.delete(
+        `http://localhost:5000/api/cart/${cartId}`
+      );
+
+      fetchCart();
+    } catch (error) {
+      console.log(
+        "Delete Error:",
+        error.response?.data || error
+      );
     }
   };
 
@@ -26,21 +77,20 @@ function Cart() {
         localStorage.getItem("user")
       );
 
-      const res = await axios.post(
+      await axios.post(
         "http://localhost:5000/api/orders/checkout",
         {
           userId: user.id,
         }
       );
 
-      console.log(res.data);
+      alert(
+        "Order Placed Successfully!"
+      );
 
-      alert("Order Placed Successfully!");
-
-      setCartItems([]);
+      fetchCart();
     } catch (error) {
       console.log(error);
-
       alert("Checkout Failed");
     }
   };
@@ -48,7 +98,8 @@ function Cart() {
   const totalPrice = cartItems.reduce(
     (total, item) =>
       total +
-      item.productId.price * item.quantity,
+      item.productId.price *
+        item.quantity,
     0
   );
 
@@ -63,38 +114,79 @@ function Cart() {
           {cartItems.map((item) => (
             <div
               key={item._id}
-              className="card p-3 mb-3"
+              className="card p-3 mb-3 shadow"
             >
               <h4>
-                {item.productId.name}
+                {item.productId?.name}
               </h4>
 
               <p>
-                Price: ₹{item.productId.price}
+                Price:
+                ₹
+                {item.productId?.price}
               </p>
 
-              <p>
-                Quantity: {item.quantity}
-              </p>
+              <div className="d-flex align-items-center gap-2">
+                <button
+                  className="btn btn-danger"
+                  onClick={() =>
+                    updateQuantity(
+                      item._id,
+                      item.quantity - 1
+                    )
+                  }
+                >
+                  -
+                </button>
 
-              <p>
-                Total: ₹
-                {item.productId.price *
+                <span className="fw-bold">
+                  {item.quantity}
+                </span>
+
+                <button
+                  className="btn btn-success"
+                  onClick={() =>
+                    updateQuantity(
+                      item._id,
+                      item.quantity + 1
+                    )
+                  }
+                >
+                  +
+                </button>
+              </div>
+
+              <p className="mt-3">
+                Total:
+                ₹
+                {item.productId?.price *
                   item.quantity}
               </p>
+
+              <button
+                className="btn btn-outline-danger"
+                onClick={() =>
+                  removeItem(item._id)
+                }
+              >
+                🗑 Remove Item
+              </button>
             </div>
           ))}
 
-          <h3>
-            Grand Total: ₹{totalPrice}
-          </h3>
+          <div className="card p-4 shadow">
+            <h3>
+              Grand Total:
+              ₹{totalPrice}
+            </h3>
 
-          <button
-            className="btn btn-success"
-            onClick={checkout}
-          >
-            Checkout
-          </button>
+            <button
+              className="btn btn-success mt-3"
+              onClick={checkout}
+            >
+              Checkout
+            </button>
+          </div>
         </>
       )}
     </div>
